@@ -670,9 +670,9 @@ select {
 .violation-message {
     display: none;
     padding: 10px 24px;
-    background: var(--error-bg);
-    border: 1px solid rgba(231, 76, 60, 0.3);
-    color: var(--error);
+    background: rgba(243, 156, 18, 0.1);
+    border: 1px solid rgba(243, 156, 18, 0.35);
+    color: #f39c12;
     font-size: 0.85rem;
     flex-shrink: 0;
     max-height: 120px;

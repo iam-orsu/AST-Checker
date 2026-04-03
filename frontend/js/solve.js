@@ -448,7 +448,7 @@
             } else {
                 showViolations(data.violations || []);
                 statusEl.textContent = '✕ Violations found';
-                statusEl.style.color = 'var(--error)';
+                statusEl.style.color = 'var(--warning)';
             }
         } catch (err) {
             statusEl.textContent = 'Check failed';
