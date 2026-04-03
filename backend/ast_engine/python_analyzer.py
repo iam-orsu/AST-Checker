@@ -27,11 +27,14 @@ def analyze(code: str) -> list[dict]:
     try:
         tree = ast.parse(code)
     except SyntaxError as e:
+        msg = e.msg
+        if "indent" in msg.lower():
+            msg += " (Check your leading spaces/tabs alignment)"
         return [
             {
                 "construct": "syntax_error",
                 "line": e.lineno or 1,
-                "details": f"Syntax error: {e.msg}",
+                "details": f"Syntax error: {msg}",
             }
         ]
 

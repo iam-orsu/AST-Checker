@@ -87,6 +87,10 @@
             padding: { top: 12 },
             automaticLayout: true,
             tabSize: 4,
+            insertSpaces: true,
+            renderWhitespace: 'all',
+            renderControlCharacters: true,
+            detectIndentation: false,
             wordWrap: 'on',
         });
 

@@ -109,6 +109,10 @@
                 padding: { top: 8 },
                 automaticLayout: true,
                 tabSize: 4,
+                insertSpaces: true,
+                detectIndentation: false,
+                renderWhitespace: 'all',
+                renderControlCharacters: true,
                 glyphMargin: true,
             });
 
