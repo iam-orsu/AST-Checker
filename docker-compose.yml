@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ast-compiler-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - sqlite-data:/app/data
+    environment:
+      - DATABASE_PATH=/app/data/ast_compiler.db
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - ast-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ast-compiler-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - ast-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: ast-compiler-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - ast-network
+    restart: unless-stopped
+
+volumes:
+  sqlite-data:
+    driver: local
+
+networks:
+  ast-network:
+    driver: bridge

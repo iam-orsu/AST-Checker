@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AST-Compiler — A coding platform that validates HOW you solve problems using AST parsing">
+    <title>AST-Compiler — Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card glass-card">
+            <div class="logo">⚡</div>
+            <h1>AST-Compiler</h1>
+            <p class="subtitle">Interview prep that validates <em>how</em> you code</p>
+
+            <form id="loginForm" autocomplete="off">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter username" required autofocus>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                </div>
+
+                <div id="loginError" class="login-error"></div>
+
+                <button type="submit" class="btn btn-primary" id="loginBtn">
+                    Sign In
+                </button>
+            </form>
+
+            <div style="margin-top: 24px; font-size: 0.8rem; color: var(--text-muted);">
+                <p>Demo credentials:</p>
+                <p style="margin-top: 4px;">Admin: <code style="color: var(--accent);">admin / admin123</code></p>
+                <p>User: <code style="color: var(--accent);">user / user123</code></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/auth.js"></script>
+</body>
+</html>

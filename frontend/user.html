@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse coding problems — AST-Compiler">
+    <title>Problems — AST-Compiler</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <div class="logo-icon">⚡</div>
+            <span>AST-Compiler</span>
+        </div>
+        <div class="navbar-actions">
+            <div class="navbar-user">
+                <div class="avatar" id="userAvatar">U</div>
+                <span id="userName">User</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="problems-container">
+        <div class="problems-header">
+            <h1>📋 Problems</h1>
+            <div class="problems-filters">
+                <select id="difficultyFilter">
+                    <option value="">All Difficulties</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
+                </select>
+                <select id="tagFilter">
+                    <option value="">All Topics</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="problems-grid" id="problemsGrid">
+            <!-- Problem cards rendered by JS -->
+        </div>
+
+        <div class="empty-state hidden" id="emptyState">
+            <div class="icon">📭</div>
+            <h3>No problems found</h3>
+            <p>Try adjusting your filters or check back later.</p>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading problems...</div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/user.js"></script>
+</body>
+</html>

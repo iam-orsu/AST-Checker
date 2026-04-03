@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create/Edit Problem — AST-Compiler Admin">
+    <title>Edit Problem — AST-Compiler Admin</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <style>
+        .admin-monaco-editor {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="/admin_dashboard.html" style="display:flex; align-items:center; gap:12px; color:inherit; text-decoration:none;">
+                <div class="logo-icon" style="background: linear-gradient(135deg, #0f3460 0%, #e94560 100%);">🔧</div>
+                <span>AST-Compiler <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 400;">ADMIN</span></span>
+            </a>
+        </div>
+        <div class="navbar-actions">
+            <a href="/admin_dashboard.html" class="btn btn-secondary btn-sm">← Back to Dashboard</a>
+            <button class="btn btn-secondary btn-sm" id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <div class="admin-edit-container">
+        <h1 id="pageTitle" style="margin-bottom: 32px;">Create New Problem</h1>
+
+        <!-- Basic Info -->
+        <div class="admin-form-section glass-card" style="padding: 24px;">
+            <h2>📝 Basic Information</h2>
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="problemTitle">Title</label>
+                    <input type="text" id="problemTitle" placeholder="e.g. Two Sum" required>
+                </div>
+                <div class="input-group">
+                    <label for="problemDifficulty">Difficulty</label>
+                    <select id="problemDifficulty">
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-group mb-16">
+                <label for="problemDescription">Description (Markdown supported)</label>
+                <textarea id="problemDescription" rows="8" placeholder="Write the problem description in Markdown..."></textarea>
+            </div>
+            <div class="input-group">
+                <label>Topic Tags</label>
+                <div class="construct-grid" id="topicTagsGrid">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Constraints -->
+        <div class="admin-form-section glass-card" style="padding: 24px;">
+            <h2>🔒 AST Constraints</h2>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+                Select which constructs are required and which are banned. The AST engine will validate user code against these rules.
+            </p>
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Required Constructs</label>
+                    <div class="construct-grid" id="requiredConstructsGrid">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Banned Constructs</label>
+                    <div class="construct-grid" id="bannedConstructsGrid">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Language Templates -->
+        <div class="admin-form-section glass-card" style="padding: 24px;">
+            <h2>💻 Language Templates</h2>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+                Write the full template code for each language. Select lines and click "Mark as Editable" to define the zones users can edit.
+            </p>
+
+            <!-- Language Tabs -->
+            <div class="language-tabs" id="languageTabs">
+                <button class="language-tab active" data-lang="python">Python</button>
+                <button class="language-tab" data-lang="c">C</button>
+                <button class="language-tab" data-lang="cpp">C++</button>
+                <button class="language-tab" data-lang="java">Java</button>
+                <button class="language-tab" data-lang="javascript">JavaScript</button>
+            </div>
+
+            <!-- Python Editor -->
+            <div class="language-editor-container active" id="editor-python" data-lang="python">
+                <div class="editor-actions-bar">
+                    <button class="btn btn-success btn-sm" onclick="markEditable('python')">✓ Mark as Editable</button>
+                    <button class="btn btn-secondary btn-sm" onclick="markLocked('python')">🔒 Mark as Locked</button>
+                    <button class="btn btn-secondary btn-sm" onclick="clearAllRanges('python')">Clear All</button>
+                    <button class="btn btn-secondary btn-sm" onclick="autoDetectEditable('python')">⚡ Auto-detect</button>
+                    <span class="editable-ranges-info" id="ranges-info-python">No editable ranges defined</span>
+                </div>
+                <div class="admin-editor-wrapper">
+                    <div id="monaco-python" class="admin-monaco-editor"></div>
+                </div>
+            </div>
+
+            <!-- C Editor -->
+            <div class="language-editor-container" id="editor-c" data-lang="c">
+                <div class="editor-actions-bar">
+                    <button class="btn btn-success btn-sm" onclick="markEditable('c')">✓ Mark as Editable</button>
+                    <button class="btn btn-secondary btn-sm" onclick="markLocked('c')">🔒 Mark as Locked</button>
+                    <button class="btn btn-secondary btn-sm" onclick="clearAllRanges('c')">Clear All</button>
+                    <button class="btn btn-secondary btn-sm" onclick="autoDetectEditable('c')">⚡ Auto-detect</button>
+                    <span class="editable-ranges-info" id="ranges-info-c">No editable ranges defined</span>
+                </div>
+                <div class="admin-editor-wrapper">
+                    <div id="monaco-c" class="admin-monaco-editor"></div>
+                </div>
+            </div>
+
+            <!-- C++ Editor -->
+            <div class="language-editor-container" id="editor-cpp" data-lang="cpp">
+                <div class="editor-actions-bar">
+                    <button class="btn btn-success btn-sm" onclick="markEditable('cpp')">✓ Mark as Editable</button>
+                    <button class="btn btn-secondary btn-sm" onclick="markLocked('cpp')">🔒 Mark as Locked</button>
+                    <button class="btn btn-secondary btn-sm" onclick="clearAllRanges('cpp')">Clear All</button>
+                    <button class="btn btn-secondary btn-sm" onclick="autoDetectEditable('cpp')">⚡ Auto-detect</button>
+                    <span class="editable-ranges-info" id="ranges-info-cpp">No editable ranges defined</span>
+                </div>
+                <div class="admin-editor-wrapper">
+                    <div id="monaco-cpp" class="admin-monaco-editor"></div>
+                </div>
+            </div>
+
+            <!-- Java Editor -->
+            <div class="language-editor-container" id="editor-java" data-lang="java">
+                <div class="editor-actions-bar">
+                    <button class="btn btn-success btn-sm" onclick="markEditable('java')">✓ Mark as Editable</button>
+                    <button class="btn btn-secondary btn-sm" onclick="markLocked('java')">🔒 Mark as Locked</button>
+                    <button class="btn btn-secondary btn-sm" onclick="clearAllRanges('java')">Clear All</button>
+                    <button class="btn btn-secondary btn-sm" onclick="autoDetectEditable('java')">⚡ Auto-detect</button>
+                    <span class="editable-ranges-info" id="ranges-info-java">No editable ranges defined</span>
+                </div>
+                <div class="admin-editor-wrapper">
+                    <div id="monaco-java" class="admin-monaco-editor"></div>
+                </div>
+            </div>
+
+            <!-- JavaScript Editor -->
+            <div class="language-editor-container" id="editor-javascript" data-lang="javascript">
+                <div class="editor-actions-bar">
+                    <button class="btn btn-success btn-sm" onclick="markEditable('javascript')">✓ Mark as Editable</button>
+                    <button class="btn btn-secondary btn-sm" onclick="markLocked('javascript')">🔒 Mark as Locked</button>
+                    <button class="btn btn-secondary btn-sm" onclick="clearAllRanges('javascript')">Clear All</button>
+                    <button class="btn btn-secondary btn-sm" onclick="autoDetectEditable('javascript')">⚡ Auto-detect</button>
+                    <span class="editable-ranges-info" id="ranges-info-javascript">No editable ranges defined</span>
+                </div>
+                <div class="admin-editor-wrapper">
+                    <div id="monaco-javascript" class="admin-monaco-editor"></div>
+                </div>
+            </div>
+
+            <div id="zeroRangesWarning" class="hidden" style="margin-top:12px; padding:10px 16px; background:var(--warning-bg); border:1px solid rgba(243,156,18,0.3); border-radius:var(--radius-md); color:var(--warning); font-size:0.85rem;">
+                ⚠️ Warning: One or more languages have zero editable ranges defined. Users will not be able to write code for those languages.
+            </div>
+        </div>
+
+        <!-- Test Cases -->
+        <div class="admin-form-section glass-card" style="padding: 24px;">
+            <h2>🧪 Test Cases</h2>
+            <div class="test-cases-list" id="testCasesList">
+                <!-- Rendered by JS -->
+            </div>
+            <button class="btn btn-secondary" id="addTestCaseBtn" style="margin-top: 12px;">+ Add Test Case</button>
+        </div>
+
+        <!-- Save -->
+        <div style="display: flex; gap: 16px; margin-top: 16px; justify-content: flex-end;">
+            <a href="/admin_dashboard.html" class="btn btn-secondary">Cancel</a>
+            <button class="btn btn-primary btn-lg" id="saveProblemBtn">💾 Save Problem</button>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <div class="loading-text" id="loadingText">Saving...</div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Monaco Editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin_edit.js"></script>
+</body>
+</html>

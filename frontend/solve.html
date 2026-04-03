@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Solve coding problems with AST validation — AST-Compiler">
+    <title>Solve — AST-Compiler</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <style>
+        /* Inline critical styles for Monaco container */
+        #monacoEditor {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="/user.html" style="display: flex; align-items: center; gap: 12px; color: inherit; text-decoration: none;">
+                <div class="logo-icon">⚡</div>
+                <span>AST-Compiler</span>
+            </a>
+        </div>
+        <div class="navbar-actions">
+            <div class="navbar-user">
+                <div class="avatar" id="userAvatar">U</div>
+                <span id="userName">User</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Solve Layout -->
+    <div class="solve-container">
+        <!-- Left Panel: Problem Description -->
+        <div class="solve-left" id="solveLeft">
+            <div class="problem-panel" id="problemPanel">
+                <h1 id="problemTitle">Loading...</h1>
+                <div class="problem-meta" id="problemMeta"></div>
+                <div class="problem-description" id="problemDescription">
+                    <p>Loading problem description...</p>
+                </div>
+
+                <!-- Sample Test Cases -->
+                <div id="sampleTestCases" style="margin-top: 24px;">
+                    <h3 style="margin-bottom: 12px;">Sample Test Cases</h3>
+                    <div id="sampleTestsList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resizer -->
+        <div class="solve-resizer" id="solveResizer"></div>
+
+        <!-- Right Panel: Editor + Results -->
+        <div class="solve-right">
+            <!-- Editor Toolbar -->
+            <div class="editor-toolbar">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <select id="languageSelect">
+                        <!-- Populated by JS -->
+                    </select>
+                    <div id="constraintStatus" style="font-size: 0.8rem; color: var(--text-muted);">
+                        Ready
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-secondary btn-sm" id="resetBtn" title="Reset to template">
+                        ↻ Reset
+                    </button>
+                    <button class="btn btn-secondary" id="runBtn" title="Run code without constraint check">
+                        ▶ Run
+                    </button>
+                    <button class="btn btn-primary" id="submitBtn">
+                        ⬆ Submit
+                    </button>
+                </div>
+            </div>
+
+            <!-- No editable zones warning -->
+            <div class="no-editable-banner" id="noEditableBanner">
+                ⚠️ This problem has no editable zones configured yet. The editor is read-only.
+            </div>
+
+            <!-- Violation Messages -->
+            <div class="violation-message" id="violationMessage">
+                <ul id="violationList"></ul>
+            </div>
+
+            <!-- Monaco Editor -->
+            <div class="editor-panel">
+                <div class="editor-wrapper" id="editorWrapper">
+                    <div id="monacoEditor"></div>
+                </div>
+
+                <!-- Console Output -->
+                <div class="console-panel" id="consolePanel">
+                    <div class="console-header">
+                        <span style="font-weight: 600; font-size: 0.85rem;">Console</span>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <button class="btn btn-secondary btn-sm" id="toggleStdinBtn" style="font-size: 0.75rem; padding: 2px 8px;">Custom Input</button>
+                            <button class="btn btn-secondary btn-sm" id="clearConsoleBtn" style="font-size: 0.75rem; padding: 2px 8px;">Clear</button>
+                        </div>
+                    </div>
+                    <div class="console-stdin hidden" id="stdinContainer">
+                        <textarea id="stdinInput" placeholder="Enter input (stdin)..." rows="2" style="width:100%; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border); border-radius:var(--radius-sm); padding:8px; font-family:var(--font-mono); font-size:0.8rem; resize:vertical;"></textarea>
+                    </div>
+                    <pre class="console-output" id="consoleOutput">Click "▶ Run" to execute your code...</pre>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="results-panel" id="resultsPanel">
+                    <div class="results-header">
+                        <div>
+                            <span class="results-status" id="resultsStatus">Accepted</span>
+                            <span class="results-summary" id="resultsSummary"></span>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" id="closeResultsBtn">✕</button>
+                    </div>
+                    <div class="test-results-list" id="testResultsList">
+                        <!-- Test results rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <div class="loading-text" id="loadingText">Submitting...</div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Monaco Editor via AMD loader -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+    <!-- Constrained Editor Plugin from CDN -->
+    <script src="https://unpkg.com/constrained-editor-plugin/dist/constrainedEditorPlugin.js"></script>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/solve.js"></script>
+</body>
+</html>
