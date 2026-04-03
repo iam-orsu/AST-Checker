@@ -71,11 +71,8 @@
                     <button class="btn btn-secondary btn-sm" id="resetBtn" title="Reset to template">
                         ↻ Reset
                     </button>
-                    <button class="btn btn-secondary" id="runBtn" title="Run code without constraint check">
-                        ▶ Run
-                    </button>
                     <button class="btn btn-primary" id="submitBtn">
-                        ⬆ Submit
+                        ▶ Submit
                     </button>
                 </div>
             </div>
@@ -94,21 +91,6 @@
             <div class="editor-panel">
                 <div class="editor-wrapper" id="editorWrapper">
                     <div id="monacoEditor"></div>
-                </div>
-
-                <!-- Console Output -->
-                <div class="console-panel" id="consolePanel">
-                    <div class="console-header">
-                        <span style="font-weight: 600; font-size: 0.85rem;">Console</span>
-                        <div style="display: flex; gap: 8px; align-items: center;">
-                            <button class="btn btn-secondary btn-sm" id="toggleStdinBtn" style="font-size: 0.75rem; padding: 2px 8px;">Custom Input</button>
-                            <button class="btn btn-secondary btn-sm" id="clearConsoleBtn" style="font-size: 0.75rem; padding: 2px 8px;">Clear</button>
-                        </div>
-                    </div>
-                    <div class="console-stdin hidden" id="stdinContainer">
-                        <textarea id="stdinInput" placeholder="Enter input (stdin)..." rows="2" style="width:100%; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border); border-radius:var(--radius-sm); padding:8px; font-family:var(--font-mono); font-size:0.8rem; resize:vertical;"></textarea>
-                    </div>
-                    <pre class="console-output" id="consoleOutput">Click "▶ Run" to execute your code...</pre>
                 </div>
 
                 <!-- Results Panel -->

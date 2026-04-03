@@ -491,67 +491,6 @@
         }
     }
 
-    // ── Run (Console) ──
-    document.getElementById('runBtn')?.addEventListener('click', runCode);
-    document.getElementById('toggleStdinBtn')?.addEventListener('click', () => {
-        const container = document.getElementById('stdinContainer');
-        container.classList.toggle('hidden');
-    });
-    document.getElementById('clearConsoleBtn')?.addEventListener('click', () => {
-        const output = document.getElementById('consoleOutput');
-        output.textContent = 'Click "▶ Run" to execute your code...';
-        output.className = 'console-output';
-    });
-
-    async function runCode() {
-        if (!editor) return;
-
-        const code = editor.getValue();
-        const runBtn = document.getElementById('runBtn');
-        const output = document.getElementById('consoleOutput');
-        const stdinInput = document.getElementById('stdinInput');
-
-        runBtn.disabled = true;
-        runBtn.textContent = '⏳ Running...';
-        output.textContent = 'Executing...';
-        output.className = 'console-output';
-
-        try {
-            const res = await fetch('/api/run', {
-                method: 'POST',
-                headers: AUTH.getAuthHeaders(),
-                body: JSON.stringify({
-                    code: code,
-                    language: currentLanguage,
-                    stdin: stdinInput ? stdinInput.value : '',
-                }),
-            });
-
-            const data = await res.json();
-
-            if (data.status === 'success') {
-                output.textContent = data.stdout || '(no output)';
-                output.className = 'console-output success';
-            } else if (data.status === 'timeout') {
-                output.textContent = '⏱ Time Limit Exceeded (5 seconds)';
-                output.className = 'console-output error';
-            } else {
-                output.textContent = data.stderr || data.stdout || 'Runtime error';
-                output.className = 'console-output error';
-            }
-
-            if (data.execution_time) {
-                output.textContent += `\n\n— Executed in ${data.execution_time}s`;
-            }
-        } catch (err) {
-            output.textContent = 'Failed to run. Is the server running?';
-            output.className = 'console-output error';
-        } finally {
-            runBtn.disabled = false;
-            runBtn.textContent = '▶ Run';
-        }
-    }
-
     // ── Submit ──
     document.getElementById('submitBtn')?.addEventListener('click', submitCode);
 

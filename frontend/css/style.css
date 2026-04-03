@@ -1288,52 +1288,6 @@ select {
     margin: 0 auto;
 }
 
-/* ── Console Panel ────────────────────────────────────── */
-.console-panel {
-    border-top: 1px solid var(--border);
-    background: #0d0d1a;
-    display: flex;
-    flex-direction: column;
-    min-height: 120px;
-    max-height: 220px;
-}
-
-.console-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 12px;
-    background: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid var(--border);
-    color: var(--text-muted);
-}
-
-.console-stdin {
-    padding: 8px 12px;
-    border-bottom: 1px solid var(--border);
-}
-
-.console-output {
-    flex: 1;
-    padding: 10px 14px;
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    line-height: 1.5;
-    color: var(--text-secondary);
-    overflow: auto;
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-
-.console-output.error {
-    color: var(--error);
-}
-
-.console-output.success {
-    color: #2ecc71;
-}
-
 /* ── Utility ───────────────────────────────────────────── */
 .hidden { display: none !important; }
 .flex { display: flex; }
